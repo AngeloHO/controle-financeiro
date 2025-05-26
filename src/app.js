@@ -2,7 +2,16 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+const pool = require("./config/db");
 
+pool.connect()
+  .then(() => {
+    console.log("Conexão com o banco de dados estabelecida com sucesso!");
+  })
+  .catch((err) => {
+    console.error("Erro ao conectar ao banco de dados:", err);
+  });
+  
 app.use(express.json());
 
 app.get("/", async (req, res) => {
@@ -14,6 +23,6 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.listen(port, () =>{
-    console.log(`Express escutando na porta ${port}`)
+app.listen(port, () => {
+  console.log(`Express escutando na porta ${port}`)
 });
